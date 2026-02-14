@@ -17,7 +17,6 @@ public class FruitCutter extends JPanel implements MouseMotionListener {
         setPreferredSize(new Dimension(600, 600));
         addMouseMotionListener(this);
 
-        // Game loop timer
         Timer timer = new Timer(30, e -> {
             spawnFruits();
             moveFruits();
@@ -27,7 +26,7 @@ public class FruitCutter extends JPanel implements MouseMotionListener {
     }
 
     private void spawnFruits() {
-        if (rand.nextInt(100) < 3) { // 3% chance each frame
+        if (rand.nextInt(100) < 3) { // 3% chance per frame
             int size = rand.nextInt(30) + 30;
             int x = rand.nextInt(getWidth() - size);
             int y = getHeight();
@@ -40,7 +39,7 @@ public class FruitCutter extends JPanel implements MouseMotionListener {
         for (Fruit f : fruits) {
             f.y -= 5; // move upward
         }
-        fruits.removeIf(f -> f.y + f.size < 0); // remove off-screen
+        fruits.removeIf(f -> f.y + f.size < 0);
     }
 
     private Color getRandomColor() {
@@ -51,27 +50,17 @@ public class FruitCutter extends JPanel implements MouseMotionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // Draw fruits
-        for (Fruit f : fruits) {
-            f.draw(g);
-        }
-
-        // Draw score
+        for (Fruit f : fruits) f.draw(g);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("Score: " + score, 10, 25);
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        sliceFruit(e.getX(), e.getY());
-    }
+    public void mouseDragged(MouseEvent e) { sliceFruit(e.getX(), e.getY()); }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        // Not used
-    }
+    public void mouseMoved(MouseEvent e) {}
 
     private void sliceFruit(int mx, int my) {
         for (Fruit f : fruits) {
@@ -83,7 +72,7 @@ public class FruitCutter extends JPanel implements MouseMotionListener {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Fruit Cutter Game");
+        JFrame frame = new JFrame("Fruit Smashing Game");
         FruitCutter game = new FruitCutter();
         frame.add(game);
         frame.pack();
